@@ -1,6 +1,6 @@
 DROP TABLE if EXISTS user;
 
 CREATE TABLE user (
-    id INTEGER NOT NULL AUTOINCREMENT,
-    username text NOT NULL UNIQUE IGNORE,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username text NOT NULL UNIQUE,
     password text NOT NULL);
