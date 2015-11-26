@@ -25,16 +25,10 @@ def init_db():
             dB.cursor().executescript(f.read())
         dB.commit()
 
-def mass_ID():
+def mass_ID(table):
     dB = fetch_db()
-    #sql = "SELECT id FROM user ORDER BY id ASC"
-    sql = "SELECT MAX(id) FROM user"
-    #holder = None
-    #for row in dB.cursor().execute(sql):
-    #    holder = str(row).replace('(', '').replace(',)', '')
+    sql = "SELECT MAX(id) FROM " + table
     hold = str(dB.cursor().execute(sql).fetchone())
-    print hold
-    print "holder"
     holder = hold.replace('(', '').replace(',)', '')
     print "working"
     if holder is None:
@@ -71,9 +65,9 @@ def upLoadFile(file, wTITL):
     ext = fileName.rsplit('.', 1)[1]
     filename = wTITL + "." + ext
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return "Successfully uploaded."
+    return "Successfully uploaded.**" + os.path.join(app.config['UPLOAD_FOLDER'], filename)
   else:
-    return "Error."
+    return "Error.**"
 
 def checkEmpty(val):
   if val is None:
@@ -109,8 +103,17 @@ def upload():
       wARTS = request.form['wARTS']
       wALBM = request.form['wALBM']
       wGENR = request.form['wGENR']
-      print "yes"
       info = upLoadFile(file, wTITL)
+      table = "songs"
+      gain = mass_ID(table)
+      dB = fetch_db()
+      PATH = info.rsplit("**", 1)[1]
+      print PATH
+      sql = "INSERT INTO songs VALUES ('" + str(gain + 1) + "', '1', '" + PATH + "', '" + wTITL + "', '" + wARTS + "', '" + wALBM + "', '" + wGENR + "')"
+      print sql
+      dB.cursor().execute(sql)
+      dB.commit()
+      info = info.split("**", 1)[0]
     return render_template('upLoad.html', info = info)
 
 #TESTER
@@ -118,6 +121,7 @@ def upload():
 def test():
     print "Adding db"
     if request.method == 'POST':
+      table = "user"
       gain = mass_ID()
       wNAME = request.form['wNAME']
       wPASS = request.form['wPASS']
@@ -134,6 +138,7 @@ def test():
     return render_template('home.html')
 
 #LOG IN
+#ALSO STARTS SESSION
 @app.route('/logIn/', methods=['POST', 'GET'])
 def logUSER():
     print "Logging in."
@@ -161,7 +166,8 @@ def logUSER():
 def newUSER():
     print "Creating user"
     if request.method == 'POST':
-      gain = mass_ID()
+      table = "user"
+      gain = mass_ID(table)
       wNAME = request.form['wNAME']
       wPASS = request.form['wPASS']
       wMAIL = request.form['wMAIL']

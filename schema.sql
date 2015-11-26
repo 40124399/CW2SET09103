@@ -9,8 +9,8 @@ CREATE TABLE user (
 DROP TABLE if EXISTS songs;
 
 CREATE TABLE songs (
-    songID INTEGER NOT NULL PRIMARY KEY,
-    id INTEGER NOT NULL,
+    id INTEGER NOT NULL PRIMARY KEY,
+    userID INTEGER NOT NULL,
     path text NOT NULL,
     title text NOT NULL,
     artist text,
