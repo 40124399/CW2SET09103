@@ -1,0 +1,18 @@
+        {% extends "header.html" %}
+        {% block content %}
+        <div class="search">
+          <h2>Create account:</h2>
+        </div>
+          <form method="POST">
+              Username:
+              <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
+              Email:
+              <input type="text" name="wMAIL" value="" placeholder="Email" required><p></p>
+              Password:
+              <input type="text" name="wPASS" value="" placeholder="Password" required><p></p>
+              Profile picture:
+              <input type="text" name="wIMAG" value="" placeholder="http:// ..." required><p></p>
+              <input type="submit" value="Save Entry">
+            </form>
+        </div>
+        {% endblock %}

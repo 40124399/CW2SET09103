@@ -1,0 +1,15 @@
+        {% extends "header.html" %}
+        {% block content %}
+        <div class="search">
+          <h2>Log in:</h2>
+        </div>
+          <form method="POST">
+              Username:
+              <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
+              Password:
+              <input type="text" name="wPASS" value="" placeholder="Password" required><p></p>
+              <input type="submit" value="Save Entry">
+            </form>
+            <p>{{ info }}<p>
+        </div>
+        {% endblock %}
