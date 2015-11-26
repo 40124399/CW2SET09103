@@ -93,7 +93,7 @@ def whipeSession():
 #UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
 @app.route('/upLoad/', methods=['POST', 'GET'])
 def upload():
-  info = session['id']
+  info = ""
   if checkSesh() is None:
     return redirect(url_for('logUSER'))
   else:
@@ -109,7 +109,7 @@ def upload():
       dB = fetch_db()
       PATH = info.rsplit("**", 1)[1]
       print PATH
-      sql = "INSERT INTO songs VALUES ('" + str(gain + 1) + "', '" + session['id'] + "', '" + PATH + "', '" + wTITL + "', '" + wARTS + "', '" + wALBM + "', '" + wGENR + "')"
+      sql = "INSERT INTO songs VALUES ('" + str(gain + 1) + "', '1', '" + PATH + "', '" + wTITL + "', '" + wARTS + "', '" + wALBM + "', '" + wGENR + "')"
       print sql
       dB.cursor().execute(sql)
       dB.commit()
