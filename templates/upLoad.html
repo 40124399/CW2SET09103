@@ -1,0 +1,26 @@
+        {% extends "header.html" %}
+        {% block content %}
+        <div class="search">
+          <h2>New database entry:</h2>
+        </div>
+          <div class="home">
+            <form method="POST">
+              Username:
+              <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
+              Email:
+              <input type="text" name="wMAIL" value="" placeholder="Email" required><p></p>
+              Password:
+              <input type="text" name="wPASS" value="" placeholder="Password" required><p></p>
+              Profile picture:
+              <input type="text" name="wIMAG" value="" placeholder="http:// ..." required><p></p>
+              Select genre: 
+              <select name="wTYPE">
+                <option value="genr1">genr1</option>
+                <option value="genr2">genr2</option>
+                <option value="genr3">genr3</option>
+              </select>
+              <input type="submit" value="Save Entry">
+            </form>
+          </div>
+        </div>
+        {% endblock %}

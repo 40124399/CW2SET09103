@@ -1,0 +1,21 @@
+<!doctype html>
+  <head>
+  <title>Hoijf's Catalogue</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleMain.css') }}">
+  </head>
+  <body>
+    <div class="header">
+      <a id="homeButton" href="http://localhost:5000/"><img src="{{ url_for('static', filename='home_button.png') }}"></a>
+      <h1>HOIJF Tunes</h1>
+      <form id="searchBar" action="http://localhost:5000/search/">
+        <input id="searchField" type="text" name="key" placeholder="Search..." required>
+        <input id="searchButton" type="submit" value="Submit">
+      </form>
+      <nav><ul>
+        <li id="menu1"><a href="http://localhost:5000/type/First_Person_Shooter">Browse</a></li>
+        <li id="menu2"><a href="http://localhost:5000/type/Role_Playing_Game">Your Music</a></li>
+        <li id="menu3"><a href="http://localhost:5000/type/Strategy_Game">Profile</a></li>
+      </ul></nav>
+  	</div>
+  {% block content %}{% endblock %}
+  {% include "footer.html" %}
