@@ -1,5 +1,4 @@
 from sys import argv
-from werkzeug import secure_filename
 from flask import Flask, g, render_template, escape, Markup, request, redirect, \
      url_for, flash, make_response, session
 import sqlite3, os, Cookie
@@ -43,56 +42,11 @@ def mass_ID():
     else:
         print holder
         return int(holder)
-
-def checkSesh():
-  if 'username' in session:
-    return session
-    print "active session"
-  else:
-    return None
-
-def checkString(fileName):
-  print "this far"
-  acceptedTypes = "mp3,wav,ogg" #list of supported types from w3school
-  fileName.split('.')
-  if fileName[1] in acceptedTypes:
-    return "ok"
-  else:
-    return "no"
-###################################### DONT TOUCH #####################################
-
-#KICK FROM SESSION
 @app.route('/whipeSeSH/')
 def whipeSession():
   session.pop('username', None)
-  print "lol"
-  return redirect(url_for('logUSER'))
-
-@app.route('/upLoad/', methods=['POST', 'GET'])
-def upload():
-  info = ""
-  if checkSesh() is None:
-    return redirect(url_for('logUSER'))
-  else:
-    print "first"
-    if request.method == 'POST':
-      print "happening"
-      file = request.files['file']
-      print file.filename
-      print "second"
-      fileName = file.filename
-      if checkString(fileName) == "no":
-        info = "Incorrect file type, please upload: MP3, WAV, OGG."
-        return render_template('upLoad.html')
-      else:
-        print "fourth"
-        filePath = "/home/tc/website/CW2SEET09103/static/songs/" + str(filename)
-        #filename = secure_filename(file.filename)
-        print "fifth"
-        file.save(filePath)
-        print "done"
-        info = "Successfuly uploaded."
-  return render_template('upLoad.html', info = info)
+  return redirect(url_for('logUser'))
+#Don't touch above+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #TESTER
 @app.route('/dbAdd/', methods=['POST', 'GET'])
 def test():
@@ -156,15 +110,16 @@ def newUSER():
 #HOME
 @app.route('/')
 def Home():
-    if checkSesh() is None:
-      return redirect(url_for('logUSER'))
-    else:
+    if 'username' in session:
+      print session
       print "Going Home."
       dB = fetch_db()
       sql = "SELECT * FROM user"
       for row in dB.cursor().execute(sql):
           print str(row)
       return render_template('home.html')
+    else:
+      return redirect(url_for('logUSER'))
 
 #end stuff
 app.secret_key = 'Afgiiuf&e48d JMF8Fzql!ihf,/z7894j'

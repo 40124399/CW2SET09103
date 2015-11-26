@@ -1,15 +1,15 @@
         {% extends "header.html" %}
         {% block content %}
-        <div class="search">
+        <div class="home">
           <h2>Log in:</h2>
-        </div>
           <form method="POST">
-              Username:
-              <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
-              Password:
-              <input type="text" name="wPASS" value="" placeholder="Password" required><p></p>
-              <input type="submit" value="Save Entry">
-            </form>
-            <p>{{ info }}<p>
+            Username:
+            <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
+            Password:
+            <input type="password" name="wPASS" value="" placeholder="Password" required><p></p>
+            <input type="submit" value="Save Entry">
+          </form>
+          <p>{{ info }}<p>
+          <p><a href="http://localhost:5000/newUSR/">Don't have an account? Create one!</a></p>
         </div>
         {% endblock %}

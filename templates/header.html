@@ -6,6 +6,14 @@
   <body>
     <div class="header">
       <a id="homeButton" href="http://localhost:5000/"><img src="{{ url_for('static', filename='home_button.png') }}"></a>
+      <div id="buttons">
+        <form action="http://localhost:5000/logIn">
+          <button id="btnLogIn" type="submit">Log in</button>
+        </form>
+        <form action="http://localhost:5000/newUSR">
+          <button id="btnSignUp" type="submit">Sign up</button>
+        </form>
+      </div>
       <h1>HOIJF Tunes</h1>
       <form id="searchBar" action="http://localhost:5000/search/">
         <input id="searchField" type="text" name="key" placeholder="Search..." required>
