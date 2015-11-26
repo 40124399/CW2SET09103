@@ -20,17 +20,31 @@ def init_db():
             dB.cursor().executescript(f.read())
         dB.commit()
 
+def mass_ID():
+    dB = fetch_db()
+    sql = "SELECT id FROM user ORDER BY id ASC"
+    print "lol"
+    for row in dB.cursor().execute(sql):
+        print str(row)
+    if str(row) is None:
+        return 0
+    else:
+        return str(row)
+
 @app.route('/dbAdd/', methods=['POST', 'GET'])
 def test():
     print "Adding db"
+    gain = mass_ID()
     if request.method == 'POST':
       wNAME = request.form['wNAME']
       wPASS = request.form['wPASS']
-      args = wNAME, wPASS
+      print gain
+      gain += 1
+      print gain
       dB = fetch_db()
       print "1"
-      sql = "INSERT INTO user (username,password) VALUES ('" + wNAME +"', '" + wPass + "')"
-      #sql = "INSERT INTO user VALUES ('', '" + wNAME + "', '" + wPASS + "')"
+      #sql = "INSERT INTO user (username,password) VALUES ('" + wNAME +"', '" + wPass + "')"
+      sql = "INSERT INTO user VALUES ('" + gain + "', '" + wNAME + "', '" + wPASS + "')"
       print "2"
       print sql
       dB.cursor().execute(sql)
