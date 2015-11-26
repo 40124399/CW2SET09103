@@ -1,5 +1,5 @@
 from sys import argv
-from flask import Flask, g, render_template, escape, Markup, request, redirect, url_for
+from flask import Flask, g, render_template, escape, Markup, request, redirect, url_for, flash
 import sqlite3
 
 app = Flask(__name__)
@@ -22,30 +22,31 @@ def init_db():
 
 def mass_ID():
     dB = fetch_db()
-    sql = "SELECT id FROM user ORDER BY id ASC"
-    print "lol"
-    for row in dB.cursor().execute(sql):
-        print str(row)
-    if str(row) is None:
-        return 0
+    #sql = "SELECT id FROM user ORDER BY id ASC"
+    sql = "SELECT MAX(id) FROM user"
+    holder = None
+    #for row in dB.cursor().execute(sql):
+    #    holder = str(row).replace('(', '').replace(',)', '')
+    hold = str(dB.cursor().execute(sql).fetchone())
+    holder = hold.replace('(', '').replace(',)', '')
+    if holder is None:
+        return "0"
     else:
-        return str(row)
+        return holder
 
 @app.route('/dbAdd/', methods=['POST', 'GET'])
 def test():
     print "Adding db"
-    gain = mass_ID()
     if request.method == 'POST':
+      gain = mass_ID()
       wNAME = request.form['wNAME']
       wPASS = request.form['wPASS']
-      print gain
-      gain += 1
-      print gain
+      temp = gain
+      tempO = int(temp) + 1
       dB = fetch_db()
-      print "1"
-      #sql = "INSERT INTO user (username,password) VALUES ('" + wNAME +"', '" + wPass + "')"
-      sql = "INSERT INTO user VALUES ('" + gain + "', '" + wNAME + "', '" + wPASS + "')"
-      print "2"
+      print "inserting"
+      sql = "INSERT INTO user VALUES ('" + str(tempO) + "', '" + wNAME + "', '" + wPASS + "')"
+      print "String appended:"
       print sql
       dB.cursor().execute(sql)
       dB.commit()
