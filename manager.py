@@ -63,14 +63,27 @@ def checkString(fileName):
   else:
     return "no"
 
-def upLoadFile(file):
+def upLoadFile(file, wTITL):
   fileName = file.filename
   if file and allowed_file(file.filename):
     fileName = secure_filename(file.filename)
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+    print "yay"
+    ext = fileName.rsplit('.', 1)[1]
+    filename = wTITL + "." + ext
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     return "Successfully uploaded."
   else:
     return "Error."
+
+def checkEmpty(val):
+  if val is None:
+    return "empty"
+  elif val == "":
+    return "empty"
+  elif val == None:
+    return "empty"
+  else:
+    return "used"
 
 def allowed_file(filename):
   return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
@@ -92,9 +105,12 @@ def upload():
   else:
     if request.method == 'POST':
       file = request.files['file']
-      info = upLoadFile(file)
-      wNAME = request.form['wNAME']
-      print wNAME
+      wTITL = request.form['wTITL']
+      wARTS = request.form['wARTS']
+      wALBM = request.form['wALBM']
+      wGENR = request.form['wGENR']
+      print "yes"
+      info = upLoadFile(file, wTITL)
     return render_template('upLoad.html', info = info)
 
 #TESTER

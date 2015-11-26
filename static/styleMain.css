@@ -119,12 +119,25 @@ h2
 }
 #btnLogIn
 {
+  left: 10%;
+  position: absolute;
   width: 60px;
-  margin-top: 10px;
-  margin-bottom: 5px;
+}
+#btnLogOut
+{
+  left: 47%;
+  position: absolute;
+  width: 60px;
+}
+#btnLogOut:hover
+{
+  background-color: #990000;
 }
 #btnSignUp
 {
+  left: 10%;
+  top: 27px;
+  position: absolute;
   width: 60px;
 }
 .header h1
