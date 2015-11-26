@@ -6,6 +6,9 @@ import sqlite3, os, Cookie
 
 app = Flask(__name__)
 data_path = 'DataBase/data.db'
+ALLOWED_EXTENSIONS = set(['ogg', 'mp3', 'wav'])
+app.config['MAX_CONTENT_LENGTH'] = 10485760
+app.config['UPLOAD_FOLDER'] = 'static/songs'
 
 def fetch_db():
     dB = getattr(g, 'dB', None)
@@ -59,6 +62,18 @@ def checkString(fileName):
     return "ok"
   else:
     return "no"
+
+def upLoadFile(file):
+  fileName = file.filename
+  if file and allowed_file(file.filename):
+    fileName = secure_filename(file.filename)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+    return "Successfully uploaded."
+  else:
+    return "Error."
+
+def allowed_file(filename):
+  return '.' in filename and filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 ###################################### DONT TOUCH #####################################
 
 #KICK FROM SESSION
@@ -68,31 +83,20 @@ def whipeSession():
   print "lol"
   return redirect(url_for('logUSER'))
 
+#UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
 @app.route('/upLoad/', methods=['POST', 'GET'])
 def upload():
   info = ""
   if checkSesh() is None:
     return redirect(url_for('logUSER'))
   else:
-    print "first"
     if request.method == 'POST':
-      print "happening"
       file = request.files['file']
-      print file.filename
-      print "second"
-      fileName = file.filename
-      if checkString(fileName) == "no":
-        info = "Incorrect file type, please upload: MP3, WAV, OGG."
-        return render_template('upLoad.html')
-      else:
-        print "fourth"
-        filePath = "/home/tc/website/CW2SEET09103/static/songs/" + str(filename)
-        #filename = secure_filename(file.filename)
-        print "fifth"
-        file.save(filePath)
-        print "done"
-        info = "Successfuly uploaded."
-  return render_template('upLoad.html', info = info)
+      info = upLoadFile(file)
+      wNAME = request.form['wNAME']
+      print wNAME
+    return render_template('upLoad.html', info = info)
+
 #TESTER
 @app.route('/dbAdd/', methods=['POST', 'GET'])
 def test():

@@ -3,8 +3,22 @@
         <div class="home">
           <h2>Upload a song:</h2>
             <form method="POST" enctype=multipart/form-data>
-              <input type=file name=file>
-              <input type=submit value=Upload>
+              Song Title:
+              <input type="text" name="wNAME" value="" placeholder="Title" required><p></p>
+              Artist:
+              <input type="text" name="wMAIL" value="" placeholder="Artist" required><p></p>
+              Album:
+              <input type="text" name="wPASS" value="" placeholder="Album"><p></p>
+              Genre:
+              <input type="text" name="wIMAG" value="" placeholder="Genre"><p></p>
+              Visibility: 
+              <select name="wTYPE">
+                <option value="private">Private</option>
+                <option value="public">Public</option>
+              </select>
+              <p></p>
+              <input type="file" name="file">
+              <input type="submit" value="Upload">
             </form>
             <p>{{ info }}<p>
           </div>
