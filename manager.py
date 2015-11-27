@@ -345,18 +345,20 @@ def Home():
           var3 = str(row[2])
           var4 = str(session['id'])
           var5 = str(row[3])
+          print "var3"
+          print var3
           sql3 = "SELECT id FROM user" + var3 + "list WHERE id LIKE '" + var4 + "'"
           buddy = str(dB.cursor().execute(sql3).fetchone()).replace("(", "").replace(",)", "")
           print buddy
           print var4
           if buddy == var4:
-            temp = '''<div class="dontEdit"><div class="Posts"><h1>''' + \
-            var1 + '''</h1><textarea type="text" readonly>''' + \
-            var2 + '''</textarea><form method="POST" \
+            temp = '''<div class="Posts"><div class="postTITLE"><h1>''' + \
+            var1 + '''</h1></div><div class="postBODY"><textarea type="text" readonly>''' + \
+            var2 + '''</textarea></div><div class="postWRITE"><form method="POST" \
             action="posting/?postID=''' + var5 + '''"> \
             <input type="text" \
             name="wCOMM" placeholder="Reply. . ." required><input type="submit" \
-            name="COMMENT"></form><div class="comments">'''
+            name="COMMENT"></form></div><div class="postCOMM">'''
             sql4 = "SELECT coment, userID FROM com" + var5 + "list"
             print sql4
             for row in dB.cursor().execute(sql4):
@@ -367,8 +369,8 @@ def Home():
               for row in dB.cursor().execute(sql5):
                 var8 = str(row[0])
                 temp = temp + '''<div class="sCom"><h3>''' + var8 + ''':</h3> \
-                <textarea type="text" readonly>''' + var6 + '''</textarea>'''
-            temp = temp + '''</div></div></div></div>'''
+                <textarea type="text" readonly>''' + var6 + '''</textarea></div>'''
+            temp = temp + '''</div></div>'''
             info = temp + info
             print info
           else:

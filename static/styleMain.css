@@ -230,7 +230,7 @@ h2
 body .home
 {
   position: absolute;
-  top: 120px;
+  top: 140px;
   width: 80%;
   left: 10%;
   margin: 0;
@@ -239,36 +239,6 @@ body .home
 body .home a
 {
     color: white;
-}
-.Posts
-{
-  background: rgba(0, 80, 250, 0.5);
-  border: 1px solid white;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 30px;
-  margin-bottom: 60px;
-}
-.Posts h1
-{
-  color: white;
-  font-weight: normal;
-  font-style: italic;
-}
-.Posts textarea
-{
-  width: 100%;
-  height: 60px;
-  resize: none;
-  background: rgba(255, 140, 0, 0.6);
-  color: white;
-}
-#master
-{
-  position: absolute;
-  width: 80%;
-  left: 10%;
-  top: 280px;
 }
 #poster
 {
@@ -331,4 +301,83 @@ body .home a
   transition: 0.3s;
   border: 1px solid black;
   background: rgba(0, 150, 0, 0.4);
+}
+#master
+{
+  width: 88%;
+  left: 6%;
+  top: 280px;
+  position: absolute;
+}
+.Posts
+{
+  background: rgba(0, 80, 250, 0.5);
+  border: 1px solid white;
+  padding-bottom: 20px;
+  margin-bottom: 500px;
+  width: 100%;
+  height: 40px;
+  position: relative;
+  max-height: 400px;
+
+}
+.Posts textarea
+{
+  width: 100%;
+  resize: none;
+  
+  padding: 0;
+}
+.postTITLE
+{
+  position: absolute;
+  color: white;
+  font-weight: normal;
+  font-style: italic;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.postBODY
+{
+  position: absolute;
+  top: 60px;
+  left: -1px;
+  width: 100%;
+  height: 120px;
+}
+.postBODY textarea
+{
+  border: 1px solid white;
+  background: rgba(255, 255, 255, 0.6);
+  height: 100%;
+}
+.sCom textarea
+{
+  height: 50px;
+}
+.sCom textarea
+{
+  border: 1px white solid;
+  padding-left: 1px;
+  background: rgba(255, 140, 0, 0.6);
+}
+.postCOMM
+{
+  border: 1px white solid;
+  background: rgba(0, 80, 250, 0.5);
+  position: absolute;
+  max-height: 400px;
+  width: 100%;
+  top: 181px;
+  left: -1px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.postWRITE
+{
+  position: absolute;
+  z-index: 999;
 }
