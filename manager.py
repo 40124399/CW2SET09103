@@ -21,18 +21,23 @@ def gen_TABLE(userID):
   with app.app_context():
     dB = fetch_db()
     with app.open_resource('friends.sql', mode="r") as f:
-      print "lol"
+      print "Creating friends table."
       var = f.read()
       var = str(var)
-      Nid = userID
-      print Nid
-      print "printed"
       var = var.replace("*:;", userID)
-      print var
       dB.cursor().executescript(var)
     dB.commit()
 
-
+def gen_COM_TABLE(postID):
+  with app.app_context():
+    dB = fetch_db()
+    with app.open_resource('comments.sql', mode='r') as f:
+      print "Creating comments table."
+      var = f.read()
+      var = str(var)
+      var = var.replace("*:;", postID)
+      dB.cursor().executescript(var)
+    dB.commit()
 
 def init_db():
     print "initDB"
@@ -259,6 +264,40 @@ def newUSER():
       info = "Welcome to our website. Please create an account."
       return render_template('newAccount.html', info=info)
 
+
+
+
+
+
+
+
+
+
+
+
+@app.route('/posting/', methods=['POST', 'GET'])
+def posting():
+  print "posting"
+  wCOMM = request.form['wCOMM']
+  postID = str(request.args.get('postID', ''))
+  table = "com" + postID + "list"
+  print postID
+  print table
+  sql = "INSERT INTO com" + postID + "list VALUES ('" + \
+        str(mass_ID(table) + 1) + "', '" + wCOMM + \
+        "', '" + str(session['id']) + "')"
+  print sql
+  dB = fetch_db()
+  dB.cursor().execute(sql)
+  dB.commit()
+  return redirect(url_for('Home'))
+
+
+
+
+
+
+
 #HOME
 @app.route('/', methods=['POST', 'GET'])
 def Home():
@@ -267,14 +306,30 @@ def Home():
       return redirect(url_for('logUSER'))
     else:
       if request.method == 'POST':
-        wTITL = request.form['wTITL']
-        wCONT = request.form['wCONT']
-        seshID = str(session['id'])
-        calcID = str(mass_ID("posts") + 1)
-        sql = "INSERT INTO posts VALUES ('" + calcID + "', '" + seshID + "', '" + wTITL + "', '" + wCONT + "')"
-        dB = fetch_db()
-        dB.cursor().execute(sql)
-        dB.commit()
+        print "almost"
+        bool = "false"
+        try:
+          comment = request.form['COMMENT']
+          if comment == "Submit":
+            bool = "true"
+        except:
+          print "error"
+        if bool == "true":
+          print "submitted"
+          wCOMM = request.form['wCOMM']
+
+        else:
+          print "posted"
+          wTITL = request.form['wTITL']
+          wCONT = request.form['wCONT']
+          seshID = str(session['id'])
+          calcID = str(mass_ID("posts") + 1)
+          sql = "INSERT INTO posts VALUES ('" + calcID + "', '" + seshID + "', '" + wTITL + "', '" + wCONT + "')"
+          dB = fetch_db()
+          dB.cursor().execute(sql)
+          dB.commit()
+          postID = str(calcID)
+          gen_COM_TABLE(postID)
         return redirect(url_for('Home'))
       else:
         info = ""
@@ -283,27 +338,41 @@ def Home():
         sql = "SELECT * FROM user"
         for row in dB.cursor().execute(sql):
             print str(row)
-        sql2 = "SELECT title, content, userID FROM posts"
+        sql2 = "SELECT title, content, userID, id FROM posts"
         for row in dB.cursor().execute(sql2):
           var1 = str(row[0])
           var2 = str(row[1])
           var3 = str(row[2])
           var4 = str(session['id'])
-          print "var1: " + var1 + " var2: " + var2 + " var3: " + var3
-          if var3 == var4:
-            print "your post"
+          var5 = str(row[3])
+          sql3 = "SELECT id FROM user" + var3 + "list WHERE id LIKE '" + var4 + "'"
+          buddy = str(dB.cursor().execute(sql3).fetchone()).replace("(", "").replace(",)", "")
+          print buddy
+          print var4
+          if buddy == var4:
+            temp = '''<div class="dontEdit"><div class="Posts"><h1>''' + \
+            var1 + '''</h1><textarea type="text" readonly>''' + \
+            var2 + '''</textarea><form method="POST" \
+            action="posting/?postID=''' + var5 + '''"> \
+            <input type="text" \
+            name="wCOMM" placeholder="Reply. . ." required><input type="submit" \
+            name="COMMENT"></form><div class="comments">'''
+            sql4 = "SELECT coment, userID FROM com" + var5 + "list"
+            print sql4
+            for row in dB.cursor().execute(sql4):
+              var6 = str(row[0])
+              var7 = str(row[1])
+              sql5 = "SELECT username FROM user WHERE id LIKE '" + var7 + "'"
+              print "2 ok"
+              for row in dB.cursor().execute(sql5):
+                var8 = str(row[0])
+                temp = temp + '''<div class="sCom"><h3>''' + var8 + ''':</h3> \
+                <textarea type="text" readonly>''' + var6 + '''</textarea>'''
+            temp = temp + '''</div></div></div></div>'''
+            info = temp + info
+            print info
           else:
-            sql3 = "SELECT id FROM user" + var3 + "list WHERE id LIKE '" + var4 + "'"
-            print sql3
-            buddy = str(dB.cursor().execute(sql3).fetchone()).replace("(", "").replace(",)", "")
-            print buddy
-            if buddy == var4:
-              temp = '''<div class="Posts"><h1>''' + var1 + '''</h1><textarea
-              type="text" readonly>''' + \
-              var2 + '''</textarea></div>'''
-              info = info + temp
-            else:
-              print "not for user"
+            print "not for user"
         info = Markup(info)
         return render_template('home.html', info=info)
 
