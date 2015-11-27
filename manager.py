@@ -260,17 +260,52 @@ def newUSER():
       return render_template('newAccount.html', info=info)
 
 #HOME
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def Home():
+    print "home"
     if checkSesh() is None:
       return redirect(url_for('logUSER'))
     else:
-      print "Going Home."
-      dB = fetch_db()
-      sql = "SELECT * FROM user"
-      for row in dB.cursor().execute(sql):
-          print str(row)
-      return render_template('home.html')
+      if request.method == 'POST':
+        wTITL = request.form['wTITL']
+        wCONT = request.form['wCONT']
+        seshID = str(session['id'])
+        calcID = str(mass_ID("posts") + 1)
+        sql = "INSERT INTO posts VALUES ('" + calcID + "', '" + seshID + "', '" + wTITL + "', '" + wCONT + "')"
+        dB = fetch_db()
+        dB.cursor().execute(sql)
+        dB.commit()
+        return redirect(url_for('Home'))
+      else:
+        info = ""
+        print "Going Home."
+        dB = fetch_db()
+        sql = "SELECT * FROM user"
+        for row in dB.cursor().execute(sql):
+            print str(row)
+        sql2 = "SELECT title, content, userID FROM posts"
+        for row in dB.cursor().execute(sql2):
+          var1 = str(row[0])
+          var2 = str(row[1])
+          var3 = str(row[2])
+          var4 = str(session['id'])
+          print "var1: " + var1 + " var2: " + var2 + " var3: " + var3
+          if var3 == var4:
+            print "your post"
+          else:
+            sql3 = "SELECT id FROM user" + var3 + "list WHERE id LIKE '" + var4 + "'"
+            print sql3
+            buddy = str(dB.cursor().execute(sql3).fetchone()).replace("(", "").replace(",)", "")
+            print buddy
+            if buddy == var4:
+              temp = '''<div class="Posts"><h1>''' + var1 + '''</h1><textarea
+              type="text" readonly>''' + \
+              var2 + '''</textarea></div>'''
+              info = info + temp
+            else:
+              print "not for user"
+        info = Markup(info)
+        return render_template('home.html', info=info)
 
 #end stuff
 app.secret_key = 'Afgiiuf&e48d JMF8Fzql!ihf,/z7894j'

@@ -230,15 +230,105 @@ h2
 body .home
 {
   position: absolute;
-  top: 200px;
+  top: 120px;
   width: 80%;
   left: 10%;
   margin: 0;
   padding: 0;
-  border: 1px black solid;
-  color: white;
 }
 body .home a
 {
     color: white;
+}
+.Posts
+{
+  background: rgba(0, 80, 250, 0.5);
+  border: 1px solid white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 30px;
+  margin-bottom: 60px;
+}
+.Posts h1
+{
+  color: white;
+  font-weight: normal;
+  font-style: italic;
+}
+.Posts textarea
+{
+  width: 100%;
+  height: 60px;
+  resize: none;
+  background: rgba(255, 140, 0, 0.6);
+  color: white;
+}
+#master
+{
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  top: 280px;
+}
+#poster
+{
+  position: absolute;
+  width: 90%;
+  left: 5%;
+  height: 240px;
+  background: rgba(250, 250, 250, 0.7);
+  margin-bottom: 200px;
+}
+#poster formp1
+{
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+#titlee
+{
+  background: rgba(250, 250, 250, 0.5);
+  border: 1px solid #269;
+  width: 250px;
+  height: 20px;
+}
+#poster textarea
+{
+  background: rgba(250, 250, 250, 0.5);
+  border: 1px solid #269;
+  width: 100%;
+  height: 100px;
+}
+#titlee:hover
+{
+  transition: 0.3s;
+  background: rgba(150, 250, 150, 0.2);
+}
+#poster textarea:hover
+{
+  transition: 0.3s;
+  background: rgba(80, 250, 250, 0.1);
+}
+#poster formp2
+{
+  position: absolute;
+  width: 90%;
+  left: 20px;
+  top: 60px;
+}
+#sub
+{
+  border-radius: 1px;
+  border: 1px solid #269;
+  background: rgba(10, 80, 170, 0.4);
+  padding: 5px;
+  position: absolute;
+  top: 180px;
+  left: 21px;
+}
+#sub:hover
+{
+  transition: 0.3s;
+  border: 1px solid black;
+  background: rgba(0, 150, 0, 0.4);
 }
