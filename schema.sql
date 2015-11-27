@@ -17,3 +17,10 @@ CREATE TABLE songs (
     album text,
     genre text);
 
+DROP TABLE if EXISTS posts;
+
+CREATE TABLE posts (
+    id INTEGER NOT NULL PRIMARY KEY,
+    userID INTEGER NOT NULL,
+    title text NOT NULL,
+    content text NOT NULL);

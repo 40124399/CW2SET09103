@@ -17,6 +17,23 @@ def fetch_db():
         g.dB = dB
     return dB
 
+def gen_TABLE(userID):
+  with app.app_context():
+    dB = fetch_db()
+    with app.open_resource('friends.sql', mode="r") as f:
+      print "lol"
+      var = f.read()
+      var = str(var)
+      Nid = userID
+      print Nid
+      print "printed"
+      var = var.replace("*:;", userID)
+      print var
+      dB.cursor().executescript(var)
+    dB.commit()
+
+
+
 def init_db():
     print "initDB"
     with app.app_context():
@@ -87,8 +104,54 @@ def allowed_file(filename):
 @app.route('/whipeSeSH/')
 def whipeSession():
   session.pop('username', None)
+  session.pop('id', None)
   print "lol"
   return redirect(url_for('logUSER'))
+
+#ADD A FRIEND PAGE
+@app.route('/addFriend/', methods=['POST', 'GET'])
+def addFriend():
+  if checkSesh() is None:
+    return redirect(url_for('logUSER'))
+  else:
+    if request.method == 'POST':
+      print "post"
+      wID = request.form['wID']
+      dB = fetch_db()
+      sql = "INSERT INTO user" + session['id'] + "list VALUES('" + wID + "')"
+      print sql
+      dB.cursor().execute(sql)
+      dB.commit()
+      return redirect(url_for('addFriend'))
+    else:
+      return render_template('addFriend.html')
+
+#BROWSE PAGE
+#LOADS INFORMATION FROM FRIENDED PEOPLE AND YOURSELF
+#IMP 1/ ONLY LOADS YOUR INFO
+@app.route('/browse/')
+def browse():
+  if checkSesh() is None:
+    return redirect(url_for('logUSER'))
+  else:
+    print session['id']
+    myInfo = ""
+    extInfo = ""
+    dB = fetch_db()
+    sql = "SELECT title, userID FROM songs"
+    for row in dB.cursor().execute(sql):
+      varR = str(row[1])
+      varS = str(session['id'])
+      sql2 = "SELECT id FROM user" + varR + "list WHERE id LIKE '" + varS + "'"
+      print sql2
+      if varR == varS:
+        myInfo = myInfo + " , " + str(row[0]).replace("(u'", "").replace("',)", "")
+      else:
+        buddy = str(dB.cursor().execute(sql2).fetchone())
+        buddy = buddy.replace("(", "").replace(",)", "")
+        if buddy == varS:
+          extInfo = extInfo + " , " + str(row[0])
+    return render_template('browse.html', myInfo=myInfo, extInfo=extInfo)
 
 #UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
 @app.route('/upLoad/', methods=['POST', 'GET'])
@@ -174,12 +237,27 @@ def newUSER():
       wPASS = request.form['wPASS']
       wMAIL = request.form['wMAIL']
       dB = fetch_db()
-      sql = "INSERT INTO user VALUES ('" + str(gain + 1) + "', '" + wMAIL + "', '" + wNAME + "', '" + wPASS + "')"
+      userID = str(gain + 1)
+      sqlVer = "SELECT username FROM user WHERE username LIKE '" + wNAME + "'"
+      sql = "INSERT INTO user VALUES ('" + userID + "', '" + wMAIL + "', '" + wNAME + "', '" + wPASS + "')"
       print sql
-      dB.cursor().execute(sql)
-      dB.commit()
-
-    return render_template('newAccount.html')
+      dNAME = str(dB.cursor().execute(sqlVer).fetchone())
+      if wNAME in dNAME:
+        info = "Username already in use please select a different one."
+        return render_template("newAccount.html", info=info)
+      else:
+        dB.cursor().execute(sql)
+        dB.commit()
+        gen_TABLE(userID)
+        print sql
+        session.pop('username', None)
+        session.pop('id', None)
+        session['username'] = wNAME
+        session['id'] = userID
+        return redirect(url_for('Home'))
+    else:
+      info = "Welcome to our website. Please create an account."
+      return render_template('newAccount.html', info=info)
 
 #HOME
 @app.route('/')
