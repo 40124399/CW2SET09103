@@ -7,7 +7,7 @@ import sqlite3, os, Cookie
 app = Flask(__name__)
 data_path = 'DataBase/data.db'
 ALLOWED_EXTENSIONS = set(['mp3','jpg'])
-app.config['MAX_CONTENT_LENGTH'] = 10485760
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = 'static/'
 
 def fetch_db():
@@ -175,8 +175,9 @@ def browse():
     return redirect(url_for('logUSER'))
   else:
     print session['id']
-    myInfo = ""
-    extInfo = ""
+    myInfo = ""#<div id='myMusic'>"
+    extInfo = ""#<div id='extMusic'>"
+
     dB = fetch_db()
     sql = "SELECT title, userID, id FROM songs"
     for row in dB.cursor().execute(sql):
@@ -187,12 +188,16 @@ def browse():
       print sql2
       if varR == varS:
         print str(row[0])
-        myInfo = myInfo + '''<a class="songs" onclick="tester(this)">''' + varN + '''</a>'''
+        myInfo = myInfo + '''<p><a class="songs" onclick="tester(this)">''' + varN + '''</a><p>'''
       else:
         buddy = str(dB.cursor().execute(sql2).fetchone())
         buddy = buddy.replace("(", "").replace(",)", "")
         if buddy == varS:
-          extInfo = extInfo + " , " + str(row[0])
+          sql3 = "SELECT username FROM user WHERE id LIKE '" + varR + "'"
+          uName = str(dB.cursor().execute(sql3).fetchone()).replace("(u'", "").replace("',)", "")
+          extInfo = extInfo + '''<p>''' + uName + '''<a class="songs" onclick="tester(this)">''' + varN + '''</a><p>'''
+    #myInfo = myInfo + "</div>"
+    #extInfo = extInfo + "</div>"
     myInfo = Markup(myInfo)
     extInfo = Markup(extInfo)
     return render_template('browse.html', myInfo=myInfo, extInfo=extInfo)
@@ -220,7 +225,6 @@ def upload():
       print check
       print wTITL
       if check != wTITL:
-        print "this"
         info = upLoadFile(file, wTITL)
         table = "songs"
         gain = mass_ID(table)
@@ -437,9 +441,13 @@ def Home():
           var4 = str(session['id'])
           var5 = str(row[3])
           sql3 = "SELECT id FROM user" + var3 + "list WHERE id LIKE '" + var4 + "'"
+          sqlUS = "SELECT username FROM user WHERE id LIKE '" + var3 + "'"
           buddy = str(dB.cursor().execute(sql3).fetchone()).replace("(", "").replace(",)", "")
           if buddy == var4:
-            temp = '''<div class="Posts"><div class="postTITLE"><h1>''' + \
+            sqlUname = str(dB.cursor().execute(sqlUS).fetchone()).replace("(u'", "").replace("',)", "")
+            print sqlUname
+            img = '''<img src="static/pics/''' + sqlUname + '''.jpg">'''
+            temp = '''<div class="Posts"><div class="postTITLE">''' + img + '''<h1>''' + sqlUname + ''': ''' + \
             var1 + '''</h1></div><div class="postBODY"><textarea type="text" readonly>''' + \
             var2 + '''</textarea></div><div class="postWRITE"><form method="POST" \
             action="posting/?postID=''' + var5 + '''"> \
@@ -454,7 +462,9 @@ def Home():
               sql5 = "SELECT username FROM user WHERE id LIKE '" + var7 + "'"
               for row in dB.cursor().execute(sql5):
                 var8 = str(row[0])
-                temp = temp + '''<div class="sCom''' + var5 + '''"><h3>''' + var8 + ''':</h3> \
+                img = '''<img src="static/pics/''' + var8 + '''.jpg">'''
+                print img
+                temp = temp + '''<div class="sCom''' + var5 + '''">''' + img + '''<h3>''' + var8 + ''':</h3> \
                 <textarea type="text" readonly>''' + var6 + '''</textarea></div>'''
             temp = temp + '''</div></div>'''
             info = info + temp
@@ -462,10 +472,15 @@ def Home():
             print "not for user"
         previous = str(int(page) - 1)
         next = str(int(page) + 1)
-        buttons = '''<a href="http://localhost:5000/?start=''' + previous + '''">Previous page</a><a href="http://localhost:5000/?start=''' + next + '''">Next page</a>'''
-        info = buttons + info + buttons
+        buttonsTop = '''<a id="topPrev" href="http://localhost:5000/?start=''' + previous + '''">Previous page</a><a id="topNext" href="http://localhost:5000/?start=''' + next + '''">Next page</a>'''
+        buttonsBottom = '''<a id="botPrev" href="http://localhost:5000/?start=''' + previous + '''">Previous page</a><a id="botNext" href="http://localhost:5000/?start=''' + next + '''">Next page</a>'''
+        info = buttonsTop + info + buttonsBottom
         info = Markup(info)
         return render_template('home.html', info=info)
+
+@app.errorhandler(413)
+def fileToLarge(error):
+  return redirect(url_for('Home'))
 
 #end stuff
 app.secret_key = 'Afgiiuf&e48d JMF8Fzql!ihf,/z7894j'

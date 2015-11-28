@@ -46,9 +46,8 @@ h2
   border: 1px solid white;
   border-bottom: 0px;
   color: rgb(0, 0, 0);
-
   height: 5%;
-  z-index: 999;
+  z-index: 500;
 }
 .footer ul
 {
@@ -311,7 +310,7 @@ body .home a
 }
 .Posts
 {
-  margin-bottom: 50px;
+  margin-bottom: 80px;
   width: 100%;
   height: auto;
   position: relative;
@@ -337,6 +336,19 @@ body .home a
   padding-left: 1px;
   padding-right: 1px;
   position: relative;
+}
+.postTITLE h1
+{
+  padding-top: 5px;
+  height: 35px;
+  top: -6px;
+  left: 34px;
+  position: relative;
+  background: rgba(100,0,0,0.5);
+  padding-left: 30px;
+  max-width: 500px;
+  border: solid 1px white;
+  overflow: hidden;
 }
 .postBODY
 {
@@ -377,6 +389,7 @@ body .home a
   height: 0px;
   top: -15px;
   position: relative;
+  left: 30px;
   color: #F2F27F;
 }
 
@@ -440,4 +453,153 @@ div[class*='sCom']
   height: 60px;
   overflow: hidden;
   background: rgba(16, 103, 255, 0.5);
+}
+#myMusic
+{
+  background: rgba(255,255,255,0.2);
+  position: absolute;
+  left: 19%;
+  width: 150px;
+  height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-left: 10px;
+  height: auto;
+  max-height: 400px;
+  color: rgb(0,255,0);
+}
+#extMusic
+{
+  background: rgba(255,255,255,0.2);
+  position: absolute;
+  left: 60%;
+  width: 150px;
+  height: auto;
+  max-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-left: 10px;
+  color: rgb(0,255,0);
+}
+#other
+{
+  background: rgba(255,255,255,0.2);
+  position: absolute;
+  left: 10%;
+  width: 75%;
+  height: 300px;
+  max-height: 400px;
+  overflow: scroll;
+  overflow-x: hidden;
+  padding-left: 10px;
+  top: 400px;
+  color: rgb(0,255,0);
+}
+#myMusic a:hover
+{
+  color: rgb(0,255,255);
+  transition: 0.3s;
+  cursor:pointer
+}
+#extMusic a:hover
+{
+  color: rgb(0,255,255);
+  transition: 0.3s;
+  cursor:pointer
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track { 
+    border-radius: 10px;
+    background: rgba(255,255,255,0);
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0,100,0,0.5);
+}
+#hearME
+{
+  position: absolute;
+  left: 70%;
+}
+#topNext
+{
+  position: absolute;
+  left: 78%;
+  top: -55px;
+  font-size: 130%;
+  text-decoration: none;
+  color: rgb(0,180,0);
+}
+#topPrev
+{
+  position: absolute;
+  left: 10%;
+  top: -55px;
+  font-size: 130%;
+  text-decoration: none;
+  color: rgb(0,180,0);
+}
+#botNext
+{
+  position: absolute;
+  left: 78%;
+  font-size: 130%;
+  text-decoration: none;
+  color: rgb(0,180,0);
+  bottom: -40px;
+  z-index: 999;
+}
+#botPrev
+{
+  z-index: 999;
+  position: absolute;
+  left: 10%;
+  bottom: -40px;
+  font-size: 130%;
+  text-decoration: none;
+  color: rgb(0,180,0);
+}
+#topPrev:hover
+{
+  color: white;
+  transition: 0.3s;
+}
+#topNext:hover
+{
+  color: white;
+  transition: 0.3s;
+}
+#botNext:hover
+{
+  color: white;
+  transition: 0.3s;
+}
+#botPrev:hover
+{
+  color: white;
+  transition: 0.3s;  
+}
+#other a:hover
+{
+  cursor: pointer;
+  color: rgb(0,255,0);
+  transition: 0.3s;
+}
+.postCOMM img
+{
+  position: absolute;
+  left: 0px;
+  height: 21px;
+  width: 21px;
+}
+.postTITLE img
+{
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  height: 40px;
+  width: 40px;
+  border: white 1px solid;
 }
