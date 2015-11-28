@@ -16,6 +16,18 @@ def fetch_db():
         dB = sqlite3.connect(data_path)
         g.dB = dB
     return dB
+######################################################################################################################################
+def makeme(userID):
+    dB = fetch_db()
+    print "see my posts"
+    userID = str(userID)
+    sql = "INSERT INTO user" + userID + "list VALUES('" + userID + "')"
+    print sql
+    dB.cursor().execute(sql)
+    dB.commit()
+    return "done"
+
+
 
 def gen_TABLE(userID):
   with app.app_context():
@@ -188,10 +200,10 @@ def browse():
 #UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
 @app.route('/upLoad/', methods=['POST', 'GET'])
 def upload():
-  info = session['id']
   if checkSesh() is None:
     return redirect(url_for('logUSER'))
   else:
+    info = session['id']
     if request.method == 'POST':
       file = request.files['file']
       wTITL = request.form['wTITL']
@@ -234,6 +246,22 @@ def upload():
 def test():
     print "testing"
     return render_template('tester.html')
+
+#createFriend entry
+@app.route('/budMe/')
+def crFr():
+  if checkSesh() is None:
+    return redirect(url_for('logUSER'))
+  else:
+    print "post"
+    wID = request.args['id']
+    dB = fetch_db()
+    sql = "INSERT INTO user" + session['id'] + "list VALUES('" + wID + "')"
+    print sql
+    dB.cursor().execute(sql)
+    dB.commit()
+    return redirect(url_for('Home'))
+
 
 #LOG IN
 #ALSO STARTS SESSION
@@ -296,6 +324,7 @@ def newUSER():
         session.pop('id', None)
         session['username'] = wNAME
         session['id'] = userID
+        done = makeme(userID)
         return redirect(url_for('Home'))
     else:
       info = "Welcome to our website. Please create an account."
@@ -317,12 +346,41 @@ def posting():
   dB = fetch_db()
   dB.cursor().execute(sql)
   dB.commit()
+  print "friended"
   return redirect(url_for('Home'))
 
 
 
-
-
+#SEARCH
+@app.route('/search/', methods=['POST', 'GET'])
+def Search():
+  print "search"
+  if checkSesh() is None:
+      return redirect(url_for('logUSER'))
+  else:
+    try:
+      pos = request.args['pos']
+    except:
+      pos = "0"
+      print "error"
+    key = request.args['key']
+    print key
+    sql = "SELECT id, username FROM user WHERE username LIKE '%" + key + "%' ORDER BY username ASC LIMIT " + pos + ",5"
+    print sql
+    dB = fetch_db()
+    html = ""
+    for row in dB.cursor().execute(sql):
+      print "this far"
+      var1 = str(row[0])
+      var2 = str(row[1])
+      html = html + '''<p><a href="http://localhost:5000/budMe?id=''' + var1 + '''">''' + var2 + '''</a></p>'''
+    previous = str(int(pos) - 1)
+    print previous
+    next = str(int(pos) + 1)
+    buttons = '''<a href="http://localhost:5000/search/?key=''' + key + '''&pos=''' + previous + '''>previous</a><a href="http://localhost:5000/search/?key=''' + key + '''&pos=''' + next + '''>previous</a>'''
+    info = buttons + html + buttons
+    info = Markup(info)
+    return render_template('search.html', info=info)
 
 
 #HOME
@@ -403,11 +461,8 @@ def Home():
           else:
             print "not for user"
         previous = str(int(page) - 1)
-        print previous
         next = str(int(page) + 1)
-        print next
         buttons = '''<a href="http://localhost:5000/?start=''' + previous + '''">Previous page</a><a href="http://localhost:5000/?start=''' + next + '''">Next page</a>'''
-        print buttons
         info = buttons + info + buttons
         info = Markup(info)
         return render_template('home.html', info=info)
