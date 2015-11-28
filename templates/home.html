@@ -1,7 +1,6 @@
 {% extends "header.html" %}
 {% block content %}
 <div class="home">
-  <button id="demo" onclick="tester()">Disable Comments</button>
 	<div id="poster">
 	<form method="POST">
 		<formp1>
@@ -17,8 +16,6 @@
       {{ info }}
   </div>
 </div>
-<script 
-    src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js">
-  </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 <script src='/static/comments.js'></script>
 {% endblock %}

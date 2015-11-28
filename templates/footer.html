@@ -7,9 +7,9 @@
     	</ul>
     </div >
     <p id="credits">Website made by James Taylor - 40124399</p>
-    <audio controls>
-      <source src="{{ url_for('static', filename='songs/james.mp3') }}" type="audio/mpeg">
-    </audio>
+    <div id="hearME">
+    <audio controls id="player" src="{{ url_for('static', filename='') }}" autoplay></audio>
+</div>
     </div>
   </body>
 </html>

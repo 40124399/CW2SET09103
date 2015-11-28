@@ -307,46 +307,44 @@ body .home a
   width: 88%;
   left: 6%;
   top: 280px;
-  position: absolute;
+  position: relative;
 }
 .Posts
 {
-  background: rgba(0, 80, 250, 0.5);
-  border: 1px solid white;
-  padding-bottom: 20px;
-  margin-bottom: 500px;
+  margin-bottom: 50px;
   width: 100%;
-  height: 40px;
+  height: auto;
   position: relative;
   max-height: 400px;
-
 }
 .Posts textarea
 {
   width: 100%;
   resize: none;
-  
   padding: 0;
+  font-size: 130%;
 }
 .postTITLE
 {
-  position: absolute;
   color: white;
   font-weight: normal;
   font-style: italic;
-  width: 100%;
-  text-align: center;
-  height: 50px;
+  width: auto;
+  text-align: left;
+  height: 10px;
+  left: 5px;
+  top: -25px;
   padding-left: 1px;
   padding-right: 1px;
+  position: relative;
 }
 .postBODY
 {
-  position: absolute;
-  top: 60px;
+  position: relative;
   left: -1px;
   width: 100%;
   height: 120px;
+  margin-bottom: 21px;
 }
 .postBODY textarea
 {
@@ -354,41 +352,92 @@ body .home a
   background: rgba(255, 255, 255, 0.6);
   height: 100%;
 }
-.sCom textarea
-{
-  height: 50px;
-}
-.sCom textarea
-{
-  border: 1px white solid;
-  padding-left: 1px;
-  background: rgba(255, 140, 0, 0.6);
-}
 .postCOMM
 {
   border: 1px white solid;
-  background: rgba(0, 80, 250, 0.5);
-  position: absolute;
-  max-height: 400px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  max-height: 200px;
   width: 100%;
-  top: 181px;
   left: -1px;
   overflow: scroll;
   overflow-x: hidden;
+  margin: 0;
+  border-bottom: 0px;
 }
+.postCOMM textarea
+{
+  height: 50px;
+  top: -10px;
+  position: relative;
+  background: rgba(255, 255, 0, 0.6);
+}
+.postCOMM h3
+{
+  height: 0px;
+  top: -15px;
+  position: relative;
+  color: #F2F27F;
+}
+
 .postWRITE
 {
+  width: 101%;
   position: absolute;
+  left: -1px;
+  top: 131px;
   z-index: 999;
+}
+#wriP
+{
+  width: 90.05%;
+  height: 17px;
+  border: white solid 1px;
+  background: rgba(153, 0, 0, 0.8);
+  border-right: 1px black solid;
+  color: white;
+}
+#subP
+{
+  background: rgba(153, 0, 0, 0.8);
+  width: 9%;
+  height: 21px;
+  border: white solid 1px;
+  color: white;
+}
+#wriP:hover
+{
+  background: rgba(255, 140, 0, 1);
+  transition: 0.6s;
+  color: black;
+}
+#subP:hover
+{
+  background: rgba(255, 140, 0, 1);
+  transition: 0.3s;
+  color: black;
 }
 #toggle
 {
   position: absolute;
-
   left: 80%;
   z-index: 1;
   border-radius: 1px;
   padding: 1px;
   border: 1px white solid;
-  background: rgba(0, 140, 0, 0.6);
+  background-color: #006600;
+  color: white;
+}
+#toggle:hover
+{
+  background-color: white;
+  color: black;
+  transition: 0.3s;
+}
+
+div[class*='sCom']
+{
+  height: 60px;
+  overflow: hidden;
+  background: rgba(16, 103, 255, 0.5);
 }

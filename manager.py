@@ -152,14 +152,14 @@ def browse():
       print sql2
       if varR == varS:
         print str(row[0])
-        myInfo = myInfo + '''<a class="songs" action="tester(''' + varN + ''')">''' + varN + '''</a>'''
+        myInfo = myInfo + '''<a class="songs" onclick="tester(this)">''' + varN + '''</a>'''
       else:
         buddy = str(dB.cursor().execute(sql2).fetchone())
         buddy = buddy.replace("(", "").replace(",)", "")
         if buddy == varS:
           extInfo = extInfo + " , " + str(row[0])
-      myInfo = Markup(myInfo)
-      extInfo = Markup(extInfo)
+    myInfo = Markup(myInfo)
+    extInfo = Markup(extInfo)
     return render_template('browse.html', myInfo=myInfo, extInfo=extInfo)
 
 #UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
@@ -267,7 +267,7 @@ def newUSER():
 @app.route('/posting/', methods=['POST', 'GET'])
 def posting():
   print "posting"
-  wCOMM = request.form['wCOMM']
+  wCOMM = request.form['wCOMM'].replace("'", "''")
   postID = str(request.args.get('postID', ''))
   table = "com" + postID + "list"
   print postID
@@ -345,8 +345,8 @@ def Home():
             var1 + '''</h1></div><div class="postBODY"><textarea type="text" readonly>''' + \
             var2 + '''</textarea></div><div class="postWRITE"><form method="POST" \
             action="posting/?postID=''' + var5 + '''"> \
-            <input type="text" \
-            name="wCOMM" placeholder="Reply. . ." required><input type="submit" \
+            <input id="wriP" type="text" \
+            name="wCOMM" placeholder="Reply. . ." required><input id="subP" type="submit" \
             name="COMMENT"></form></div><button id="toggle" \
             onclick="tester(''' + var5 + ''')">Toggle comments</button><div class="postCOMM">'''
             sql4 = "SELECT coment, userID FROM com" + var5 + "list"
