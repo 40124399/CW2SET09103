@@ -6,7 +6,7 @@ import sqlite3, os, Cookie
 
 app = Flask(__name__)
 data_path = 'DataBase/data.db'
-ALLOWED_EXTENSIONS = set(['ogg', 'mp3', 'wav'])
+ALLOWED_EXTENSIONS = set(['mp3'])
 app.config['MAX_CONTENT_LENGTH'] = 10485760
 app.config['UPLOAD_FOLDER'] = 'static/songs'
 
@@ -143,19 +143,23 @@ def browse():
     myInfo = ""
     extInfo = ""
     dB = fetch_db()
-    sql = "SELECT title, userID FROM songs"
+    sql = "SELECT title, userID, id FROM songs"
     for row in dB.cursor().execute(sql):
       varR = str(row[1])
       varS = str(session['id'])
+      varN = str(row[0]).replace("(u'", "").replace("',)", "")
       sql2 = "SELECT id FROM user" + varR + "list WHERE id LIKE '" + varS + "'"
       print sql2
       if varR == varS:
-        myInfo = myInfo + " , " + str(row[0]).replace("(u'", "").replace("',)", "")
+        print str(row[0])
+        myInfo = myInfo + '''<a class="songs" action="tester(''' + varN + ''')">''' + varN + '''</a>'''
       else:
         buddy = str(dB.cursor().execute(sql2).fetchone())
         buddy = buddy.replace("(", "").replace(",)", "")
         if buddy == varS:
           extInfo = extInfo + " , " + str(row[0])
+      myInfo = Markup(myInfo)
+      extInfo = Markup(extInfo)
     return render_template('browse.html', myInfo=myInfo, extInfo=extInfo)
 
 #UPLOAD FILES HERE <<<<<<<<<<<<<<<<<<<<<<<<<
@@ -187,23 +191,8 @@ def upload():
 #TESTER
 @app.route('/dbAdd/', methods=['POST', 'GET'])
 def test():
-    print "Adding db"
-    if request.method == 'POST':
-      table = "user"
-      gain = mass_ID()
-      wNAME = request.form['wNAME']
-      wPASS = request.form['wPASS']
-      temp = gain
-      tempO = int(temp) + 1
-      dB = fetch_db()
-      print "inserting"
-      sql = "INSERT INTO user VALUES ('" + str(tempO) + "', '" + wNAME + "', '" + wPASS + "')"
-      print "String appended:"
-      print sql
-      dB.cursor().execute(sql)
-      dB.commit()
-    info = "nothing"
-    return render_template('home.html')
+    print "testing"
+    return render_template('tester.html')
 
 #LOG IN
 #ALSO STARTS SESSION
@@ -358,7 +347,8 @@ def Home():
             action="posting/?postID=''' + var5 + '''"> \
             <input type="text" \
             name="wCOMM" placeholder="Reply. . ." required><input type="submit" \
-            name="COMMENT"></form></div><div class="postCOMM">'''
+            name="COMMENT"></form></div><button id="toggle" \
+            onclick="tester(''' + var5 + ''')">Toggle comments</button><div class="postCOMM">'''
             sql4 = "SELECT coment, userID FROM com" + var5 + "list"
             print sql4
             for row in dB.cursor().execute(sql4):
@@ -368,7 +358,7 @@ def Home():
               print "2 ok"
               for row in dB.cursor().execute(sql5):
                 var8 = str(row[0])
-                temp = temp + '''<div class="sCom"><h3>''' + var8 + ''':</h3> \
+                temp = temp + '''<div class="sCom''' + var5 + '''"><h3>''' + var8 + ''':</h3> \
                 <textarea type="text" readonly>''' + var6 + '''</textarea></div>'''
             temp = temp + '''</div></div>'''
             info = temp + info

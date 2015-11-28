@@ -1,19 +1,13 @@
 {% extends "header.html" %}
 {% block content %}
 <div class="home">
-
-	<textarea rows="4" cols="50">
+	<div id="myInfo">
 	  {{ myInfo }}
-	</textarea>
-
-	<textarea rows="4" cols="50">
+	</div>
+	<div id="extInfo">
 	  {{ extInfo }}
-	</textarea>
-
-<audio controls>
-  <source src="horse.mp3" type="audio/mpeg">
-Your browser does not support the audio element.
-</audio>
-
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src='/static/comments.js'></script>
 </div>
 {% endblock %}

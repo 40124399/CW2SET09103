@@ -381,3 +381,14 @@ body .home a
   position: absolute;
   z-index: 999;
 }
+#toggle
+{
+  position: absolute;
+
+  left: 80%;
+  z-index: 1;
+  border-radius: 1px;
+  padding: 1px;
+  border: 1px white solid;
+  background: rgba(0, 140, 0, 0.6);
+}
