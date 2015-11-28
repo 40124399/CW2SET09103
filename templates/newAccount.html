@@ -2,7 +2,7 @@
         {% block content %}
         <div class="home">
           <h2>Create account:</h2>
-          <form method="POST">
+          <form method="POST" enctype=multipart/form-data>
               Username:
               <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
               Email:
@@ -10,8 +10,8 @@
               Password:
               <input type="password" name="wPASS" value="" placeholder="Password" required><p></p>
               Profile picture:
-              <input type="text" name="wIMAG" value="" placeholder="http:// ..." required><p></p>
-              <input type="submit" value="Save Entry">
+              <input type="file" name="file">
+              <input type="submit" value="Upload">
             </form>
             <p><a href="http://localhost:5000/logIn/">Already have an account? Log in!</a></p>
             {{ info }}
