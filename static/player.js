@@ -18,7 +18,7 @@ function tester(clicked)
                 + currentdate.getHours() + ":"  
                 + currentdate.getMinutes() + ":" 
                 + currentdate.getSeconds();
-	document.getElementById('other').innerHTML = old+'<p>On the '+datetime+', you played: >>> <a class="history" onclick="tester(this)">'+songN+'.</a> <<< click to play again.</p>';
+	document.getElementById('other').innerHTML = old+'<p>On the '+datetime+', you played: >>> <a class="history" onclick="tester(this)">'+songN+'</a> <<< click to play again.</p>';
 	$(songN).appendTo('#other')
 }
 

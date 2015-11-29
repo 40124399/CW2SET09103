@@ -603,3 +603,49 @@ div[class*='sCom']
   width: 40px;
   border: white 1px solid;
 }
+#accounts
+{
+  position: absolute;
+  left: 30%;
+  top: 100px;
+  width: 40%;
+  height: 350px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: rgba(255, 140, 0, 0.5);
+}
+#searched
+{
+  width: 40%;
+  position: absolute;
+  left: 30%;
+  height: 400px;
+  max-height: 600px;
+  font-size: 150%;
+  background: rgba(255,255,255,0.2);
+  padding-left: 40px;
+  padding-top: 25px;
+  overflow: scroll;
+  overflow-x: hidden; 
+}
+#searched img
+{
+  position: relative;
+  height: 50px;
+  width: 50px;
+  top: 18px;
+}
+#searched a
+{
+  text-decoration: none;
+}
+#searched a:hover
+{
+  color: rgb(0,255,0);
+  transition: 0.3s;
+}
+#searched img:hover
+{
+  transform: scale(1.1, 1.1);
+  transition: 0.3s;
+}

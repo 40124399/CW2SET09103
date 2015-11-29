@@ -7,7 +7,7 @@ import sqlite3, os, Cookie
 app = Flask(__name__)
 data_path = 'DataBase/data.db'
 ALLOWED_EXTENSIONS = set(['mp3','jpg'])
-app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = 'static/'
 
 def fetch_db():
@@ -125,7 +125,7 @@ def allowed_file(filename):
 
 def posty(title, post):
   print "reacheed"
-  title = title
+  title = "  -- UPLOAD --"
   post = post
   wTITL = str(title).replace("'", "''")
   wCONT = str(post).replace("'", "''")
@@ -377,7 +377,9 @@ def Search():
       print "this far"
       var1 = str(row[0])
       var2 = str(row[1])
-      html = html + '''<p><a href="http://localhost:5000/budMe?id=''' + var1 + '''">''' + var2 + '''</a></p>'''
+      img = "/static/pics/" + var2 + ".jpg"
+      print img
+      html = html + '''<p><a href="http://localhost:5000/budMe?id=''' + var1 + '''"><img class="searchPic" src="''' + img + '''"> -- ''' + var2 + '''</a></p>'''
     previous = str(int(pos) - 1)
     print previous
     next = str(int(pos) + 1)

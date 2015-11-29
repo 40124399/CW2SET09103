@@ -1,6 +1,7 @@
         {% extends "header.html" %}
         {% block content %}
         <div class="home">
+          <div id="accounts">
           <h2>Upload a song:</h2>
             <form method="POST" enctype=multipart/form-data>
               Song Title:
@@ -21,6 +22,6 @@
               <input type="submit" value="Upload">
             </form>
             <p>{{ info }}<p>
-          </div>
+          </div></div>
         </div>
         {% endblock %}
