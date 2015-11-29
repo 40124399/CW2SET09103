@@ -1,0 +1,21 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="home">
+	<div id="poster">
+	<form method="POST">
+		<formp1>
+              <input id="titlee" type="text" name="wTITL" value="" placeholder="Title  .  . 25char limit." maxlength="25"required><p></p>
+        </formp1>
+        <formp2>
+              <textarea type="text" name="wCONT" value="" placeholder="What's on your mind?  .  .  .  ." required></textarea>
+        </formp2>
+              <input id="sub" type="submit" value="Save Entry">
+    </form>
+</div>
+    <div id="master">
+      {{ info }}
+  </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src='/static/comments.js'></script>
+{% endblock %}

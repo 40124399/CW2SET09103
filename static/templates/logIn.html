@@ -1,0 +1,16 @@
+        {% extends "header.html" %}
+        {% block content %}
+        <div class="home">
+          <div id="accounts">
+          <h2>Log in:</h2>
+          <form method="POST">
+            Username:
+            <input type="text" name="wNAME" value="" placeholder="Username" required><p></p>
+            Password:
+            <input type="password" name="wPASS" value="" placeholder="Password" required><p></p>
+            <input type="submit" value="Save Entry">
+          </form>
+          <p>{{ info }}<p>
+          <p><a href="http://localhost:5000/newUSR/">Don't have an account? Create one!</a></p>
+        </div></div>
+        {% endblock %}

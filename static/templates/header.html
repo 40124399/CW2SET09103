@@ -1,0 +1,36 @@
+<!doctype html>
+  <head>
+  <title>Hoijf's Catalogue</title>
+  <script 
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js">
+  </script>
+  <script src='/static/player.js'></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleMain.css') }}">
+  </head>
+  <body>
+    <div class="header">
+      <a id="homeButton" href="http://localhost:5000/"><img src="{{ url_for('static', filename='home_button.png') }}"></a>
+      <div id="buttons">
+        <form action="http://localhost:5000/logIn">
+          <button id="btnLogIn" type="submit">Log in</button>
+        </form>
+        <form action="http://localhost:5000/newUSR">
+          <button id="btnSignUp" type="submit">Sign up</button>
+        </form>
+        <form action="http://localhost:5000/whipeSeSH">
+          <button id="btnLogOut" type="submit">Log out</button>
+        </form>
+      </div>
+      <h1>HOIJF Tunes</h1>
+      <form id="searchBar" action="http://localhost:5000/search/">
+        <input id="searchField" type="text" name="key" placeholder="Search..." required>
+        <input id="searchButton" type="submit" value="Submit">
+      </form>
+      <nav><ul>
+        <li id="menu1"><a href="http://localhost:5000/browse">Browse</a></li>
+        <li id="menu2"><a href="http://localhost:5000/upLoad/">Uploads</a></li>
+        <li id="menu3"><a href="http://localhost:5000/">Posts</a></li>
+      </ul></nav>
+  	</div>
+  {% block content %}{% endblock %}
+  {% include "footer.html" %}
