@@ -7,7 +7,7 @@ import sqlite3, os, Cookie
 app = Flask(__name__)
 data_path = 'DataBase/data.db'
 ALLOWED_EXTENSIONS = set(['mp3','jpg'])
-app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 app.config['UPLOAD_FOLDER'] = 'static/'
 
 def fetch_db():
